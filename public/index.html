@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>אישור הגעה לחתונה</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      direction: rtl;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 248, 240, 0.7);
+      z-index: 1;
+    }
+    .card {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      text-align: center;
+      width: 350px;
+      max-width: 90%;
+    }
+    h1 {
+      margin-bottom: 20px;
+      color: #b56576;
+      font-size: 24px;
+    }
+    label {
+      display: block;
+      margin: 10px 0;
+      font-size: 16px;
+      color: #333;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+    .options {
+      margin: 15px 0;
+    }
+    .options label {
+      display: inline-block;
+      margin: 0 10px;
+      font-weight: bold;
+    }
+    button {
+      background: #ffb4a2;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #e5989b;
+    }
+    #message {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #6b705c;
+    }
+
+    /* --- רספונסיביות --- */
+    @media (max-width: 500px) {
+      .card {
+        padding: 20px;
+        border-radius: 15px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      button {
+        width: 100%;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="card">
+    <h1>אישור הגעה לחתונה 💍</h1>
+    <form id="rsvpForm">
+      <label>
+        שם מלא:
+        <input type="text" name="name" required>
+      </label>
+      <div class="options">
+        <label><input type="radio" name="attendance" value="מגיע" required> מגיע</label>
+        <label><input type="radio" name="attendance" value="לא מגיע"> לא מגיע</label>
+      </div>
+      <button type="submit">שלח</button>
+    </form>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    document.getElementById("rsvpForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      const data = {
+        name: formData.get("name"),
+        attendance: formData.get("attendance")
+      };
+
+      const res = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      document.getElementById("message").textContent = result.message;
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <title>ניהול אישורי הגעה</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      padding: 40px 20px;
+      direction: rtl;
+      position: relative;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 248, 240, 0.7);
+      z-index: 1;
+    }
+    .content {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #b56576;
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+    button {
+      display: block;
+      margin: 0 auto 20px;
+      background: #ffb4a2;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 20px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #e5989b;
+    }
+    table {
+      border-collapse: collapse;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 800px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    }
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #eee;
+      font-size: 16px;
+    }
+    th {
+      background: #ffb4a2;
+      color: white;
+    }
+    tr:nth-child(even) {
+      background: #fdf0f0;
+    }
+
+    /* --- רספונסיביות --- */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 22px;
+      }
+      table {
+        font-size: 14px;
+      }
+      th, td {
+        padding: 8px;
+      }
+      button {
+        width: 100%;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="content">
+    <h1>רשימת אורחים 📋</h1>
+    <button onclick="loadGuests()">רענן</button>
+    <table>
+      <thead>
+        <tr>
+          <th>שם</th>
+          <th>סטטוס הגעה</th>
+        </tr>
+      </thead>
+      <tbody id="guestList"></tbody>
+    </table>
+  </div>
+
+  <script>
+    async function loadGuests() {
+      const res = await fetch("/api/guests");
+      const guests = await res.json();
+      const tbody = document.getElementById("guestList");
+      tbody.innerHTML = "";
+
+      if (guests.length === 0) {
+        tbody.innerHTML = "<tr><td colspan='2'>אין תשובות עדיין</td></tr>";
+        return;
+      }
+
+      guests.forEach(g => {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td>${g.name}</td><td>${g.attendance}</td>`;
+        tbody.appendChild(row);
+      });
+    }
+
+    loadGuests();
+  </script>
+</body>
+</html>
