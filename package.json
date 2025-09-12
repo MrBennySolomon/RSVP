@@ -7,11 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrBennySolomon/RSVP.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrBennySolomon/RSVP/issues"
+  },
+  "homepage": "https://github.com/MrBennySolomon/RSVP#readme",
   "dependencies": {
-    "express": "^5.1.0",
-    "mongodb": "^6.19.0"
+    "express": "^5.1.0"
   }
 }

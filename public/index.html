@@ -115,13 +115,14 @@
   <script>
     document.getElementById("rsvpForm").addEventListener("submit", async (e) => {
       e.preventDefault();
+
       const formData = new FormData(e.target);
       const data = {
         name: formData.get("name"),
         attendance: formData.get("attendance")
       };
 
-      const res = await fetch("/.netlify/functions/rsvp", {
+      const res = await fetch("/api/rsvp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
