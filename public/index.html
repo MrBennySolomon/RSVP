@@ -5,6 +5,13 @@
   <title>אישור הגעה לחתונה</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
       font-family: "Segoe UI", Tahoma, sans-serif;
       display: flex;
@@ -17,14 +24,16 @@
     .overlay {
       position: absolute;
       top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(255, 248, 240, 0.7);
+      width: 100vw; height: 100vh;
+      /* background: rgba(255, 248, 240, 0.7); */
+      background-image: url("bbq.png"); 
+
       z-index: 1;
     }
     .card {
       position: relative;
       z-index: 2;
-      background: rgba(255, 255, 255, 0.9);
+      background: rgba(0, 0, 0, 0.4);
       padding: 30px 40px;
       border-radius: 20px;
       box-shadow: 0 6px 15px rgba(0,0,0,0.15);
@@ -34,14 +43,18 @@
     }
     h1 {
       margin-bottom: 20px;
-      color: #b56576;
+      color: #EFDEC3;
       font-size: 24px;
     }
     label {
       display: block;
       margin: 10px 0;
       font-size: 16px;
-      color: #333;
+      color: #EFDEC3;
+    }
+
+    input[type="radio"] {
+      accent-color: coral;
     }
     input[type="text"] {
       width: 100%;
@@ -97,14 +110,15 @@
 <body>
   <div class="overlay"></div>
   <div class="card">
-    <h1>אישור הגעה לחתונה 💍</h1>
+    <h1>אישור הגעה</h1>
+    <h1>למנגל ביער בן-שמן 🔥</h1>
     <form id="rsvpForm">
       <label>
         שם מלא:
-        <input type="text" name="name" required>
+        <input type="text" name="name" required >
       </label>
       <div class="options">
-        <label><input type="radio" name="attendance" value="מגיע" required> מגיע</label>
+        <label><input type="radio" name="attendance" value="מגיע" required checked> מגיע</label>
         <label><input type="radio" name="attendance" value="לא מגיע"> לא מגיע</label>
       </div>
       <button type="submit">שלח</button>
